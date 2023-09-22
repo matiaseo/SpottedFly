@@ -4,7 +4,7 @@ import { Box } from "@mui/material";
 import "./App.css";
 
 import { Home } from "./pages/home/Home";
-import { Navbar } from "./shared/Navbar";
+import { Navbar } from "./shared/sidebar/Navbar";
 
 const darkTheme = createTheme({
   palette: {

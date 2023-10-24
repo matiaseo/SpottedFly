@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { Button, ListItemIcon, ListItem, ListItemButton } from "@mui/material";
 
 const buttonStyles = {
   textTransform: "none",
@@ -12,8 +12,14 @@ const buttonStyles = {
 
 export const SidebarButton = ({ label, isActive, isExpanded, handleClick, children }) => {
   return (
-    <Button startIcon={children} onClick={handleClick} sx={buttonStyles} disableElevation>
-      {isExpanded && label}
-    </Button>
+    // <Button startIcon={children} onClick={handleClick} sx={buttonStyles} disableElevation>
+    //   {isExpanded && label}
+    // </Button>
+    <ListItem>
+      <ListItemButton>
+        < ListItemIcon > {children}</ ListItemIcon>
+      </ListItemButton>
+    </ListItem>
+
   );
 };

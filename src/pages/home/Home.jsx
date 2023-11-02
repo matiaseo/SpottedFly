@@ -9,14 +9,18 @@ const MOCK_DATA = [
     title: "More like Éxitos Argentina",
     cardsData: [
       {
-        picture: "https://www.macworld.com/wp-content/uploads/2023/04/apple-music-spotify-graphic-2.jpg?quality=50&strip=all",
+        picture:
+          "https://www.macworld.com/wp-content/uploads/2023/04/apple-music-spotify-graphic-2.jpg?quality=50&strip=all",
         title: "Viva Latino",
-        description: "Todays top Latin, Todays top Latin, Todays top Latin, Todays top Latin,",
+        description:
+          "Todays top Latin, Todays top Latin, Todays top Latin, Todays top Latin,",
       },
       {
-        picture: "https://www.macworld.com/wp-content/uploads/2023/04/apple-music-spotify-graphic-2.jpg?quality=50&strip=all",
+        picture:
+          "https://www.macworld.com/wp-content/uploads/2023/04/apple-music-spotify-graphic-2.jpg?quality=50&strip=all",
         title: "Viva Latino",
-        description: "Todays top Latin, Todays top Latin, Todays top Latin, Todays top Latin,",
+        description:
+          "Todays top Latin, Todays top Latin, Todays top Latin, Todays top Latin,",
       },
     ],
   },
@@ -24,7 +28,8 @@ const MOCK_DATA = [
     title: "More like USA",
     cardsData: [
       {
-        picture: "https://www.macworld.com/wp-content/uploads/2023/04/apple-music-spotify-graphic-2.jpg?quality=50&strip=all",
+        picture:
+          "https://www.macworld.com/wp-content/uploads/2023/04/apple-music-spotify-graphic-2.jpg?quality=50&strip=all",
         title: "Viva Latino",
         description: "Todays top Latin",
       },
@@ -35,7 +40,8 @@ const MOCK_DATA = [
     description: "Description",
     cardsData: [
       {
-        picture: "https://www.macworld.com/wp-content/uploads/2023/04/apple-music-spotify-graphic-2.jpg?quality=50&strip=all",
+        picture:
+          "https://www.macworld.com/wp-content/uploads/2023/04/apple-music-spotify-graphic-2.jpg?quality=50&strip=all",
         title: "Viva Latino",
         description: "Todays top Latin",
       },

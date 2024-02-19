@@ -1,4 +1,3 @@
-import React from "react";
 import { Card as CardMui } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -10,7 +9,7 @@ import { PlayButton } from "../PlayButton";
 export const Card = ({ picture, title, description }) => {
   return (
     <CardMui sx={{ width: 176 }}>
-      <CardActionArea>
+      <CardActionArea href={`/playlist/1`}>
         <CardMedia component="img" height="140" image={picture} alt={title} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">

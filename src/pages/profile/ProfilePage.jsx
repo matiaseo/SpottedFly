@@ -1,7 +1,6 @@
-import React from "react";
 import { Box, Stack } from "@mui/material";
 
-export const Profile = () => {
+export const ProfilePage = () => {
     return (
         <>
             <Box>

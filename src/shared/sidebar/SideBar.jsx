@@ -1,6 +1,5 @@
 import React from "react";
 import List from "@mui/material/List";
-import CssBaseline from "@mui/material/CssBaseline";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -17,7 +16,7 @@ import { Drawer, DrawerHeader } from "./Drawer";
 import { Add, ArrowForward, Delete, Home, Search } from "@mui/icons-material";
 import { Badge, Button, Chip, IconButton, Tooltip } from "@mui/material";
 
-export const Navbar = () => {
+export const SideBar = () => {
 	const [open, setOpen] = React.useState(false);
 
 	const handleToggleDrawer = () => {
@@ -26,7 +25,6 @@ export const Navbar = () => {
 
 	return (
 		<>
-			<CssBaseline />
 			<Drawer variant="permanent" open={open}>
 				<DrawerHeader>
 					{/* // TODO: Seems like the drawer will be necessary and it would work for us as a separated section just like the original Spotify */}

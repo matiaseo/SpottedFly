@@ -47,12 +47,11 @@ const styles = { container: { width: "100%" } };
 
 export const Home = () => {
   return (
-    <Box sx={styles.container}>
-      <Stack spacing={2}>
-        {MOCK_DATA.map((cardsData) => (
-          <CardSection {...cardsData} key={cardsData.title} />
-        ))}
-      </Stack>
-    </Box>
+
+    <Stack sx={{ flexGrow: 1 }} spacing={2}>
+      {MOCK_DATA.map((cardsData) => (
+        <CardSection {...cardsData} key={cardsData.title} />
+      ))}
+    </Stack>
   );
 };

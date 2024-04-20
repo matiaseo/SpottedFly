@@ -31,7 +31,12 @@ const TinyText = styled(Typography)({
 
 export const MusicPlayer = ({ playlist }) => {
 
-    const [track, setTrack] = useState(playlist[0])
+    const [track, setTrack] = useState(playlist[0].song)
+
+    const [trackInfo, setTrackInfo] = useState({
+        name: playlist[0].name,
+        artist: playlist[0].artist
+    })
 
     const [duration, setDuration ] = useState(0);
 
@@ -66,7 +71,9 @@ export const MusicPlayer = ({ playlist }) => {
 
   useEffect(() => {
     setPosition(0);
-    track.volume = volume/100
+    track.volume = volume/100;
+    const index = playlist.map(({song}) => song).indexOf(track);
+    setTrackInfo({name: playlist[index].name, artist: playlist[index].artist});
   },[track])
   
     useEffect(() => {
@@ -76,20 +83,21 @@ export const MusicPlayer = ({ playlist }) => {
     const handleClick = () => setPaused(!paused);
 
     const handleForward = () => {
-        const index = playlist.indexOf(track);
+        const index = playlist.map(({song}) => song).indexOf(track);
+        console.log('el index', index)
         if (index >= 0){
             track.pause();
-            setVolume(track.volume*100)
-            index < playlist.length -1 ? setTrack(playlist[index+1]) : setTrack(playlist[0]) 
+            setVolume(track.volume*100);
+            index < playlist.length -1 ? setTrack(playlist[index+1].song) : setTrack(playlist[0].song) 
         }
     }
 
     const handleRewind = () => {
-        const index = playlist.indexOf(track);
+        const index = playlist.map(({song}) => song).indexOf(track);
         if (index >= 0){
             track.pause();
-            setVolume(track.volume*100)
-            index > 0 ? setTrack(playlist[index-1]) : setTrack(playlist[playlist.length-1]) 
+            setVolume(track.volume*100);
+            index > 0 ? setTrack(playlist[index-1].song) : setTrack(playlist[playlist.length-1].song) 
         }
     }
   
@@ -106,7 +114,10 @@ export const MusicPlayer = ({ playlist }) => {
     return (
         <Box sx={{ position: 'sticky', bottom: 10, width: '100%' }}>
             <Grid container spacing={6} alignItems="center" justifyContent="space-around">
-                <Grid item >Whats being played?</Grid>
+                <Grid item xs={2}>
+                    <TinyText>{trackInfo.name}</TinyText>
+                    <TinyText>{trackInfo.artist}</TinyText>
+                </Grid>
                 <Grid item xs={4}>
                 <Box
                     sx={{

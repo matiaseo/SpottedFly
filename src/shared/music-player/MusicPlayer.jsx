@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import { styled } from '@mui/material/styles';
-import { Box, Grid, IconButton, Typography, Slider } from "@mui/material"
+import { Box, Grid, IconButton, Typography, Slider,Stack } from "@mui/material"
 import {
     PlayArrowRounded,
     PauseRounded,
+    FastRewindRounded,
+    FastForwardRounded,
+    VolumeUpRounded,
+    VolumeDownRounded
 } from "@mui/icons-material";
 
 
@@ -25,19 +29,21 @@ const TinyText = styled(Typography)({
   letterSpacing: 0.2,
 });
 
-export const MusicPlayer = ({ track }) => {
+export const MusicPlayer = ({ playlist }) => {
 
-    const [audio, setAudio] = useState(track)
+    const [track, setTrack] = useState(playlist[0])
 
     const [duration, setDuration ] = useState(0);
 
-    audio.addEventListener('loadedmetadata', (e) => {
+    track.addEventListener('loadedmetadata', (e) => {
         setDuration(Math.trunc(e.target.duration))
     });
 
     const [paused, setPaused] = useState(true);
 
     const [position, setPosition] = useState(0);
+
+    const [volume, setVolume] = useState(100)
   
     useEffect(() => {
       if (!paused){
@@ -56,17 +62,45 @@ export const MusicPlayer = ({ track }) => {
           clearInterval(timer);
       };
       }
-  }, [paused, position, audio]);
+  }, [paused, position, track]);
+
+  useEffect(() => {
+    setPosition(0);
+    track.volume = volume/100
+  },[track])
   
     useEffect(() => {
-      !paused ? audio.play() : audio.pause()
-    }, [paused, audio])
+      !paused ? track.play() : track.pause()
+    }, [paused, track])
   
-    const handleClick = () => setPaused(!paused)
+    const handleClick = () => setPaused(!paused);
+
+    const handleForward = () => {
+        const index = playlist.indexOf(track);
+        if (index >= 0){
+            track.pause();
+            setVolume(track.volume*100)
+            index < playlist.length -1 ? setTrack(playlist[index+1]) : setTrack(playlist[0]) 
+        }
+    }
+
+    const handleRewind = () => {
+        const index = playlist.indexOf(track);
+        if (index >= 0){
+            track.pause();
+            setVolume(track.volume*100)
+            index > 0 ? setTrack(playlist[index-1]) : setTrack(playlist[playlist.length-1]) 
+        }
+    }
   
     const handleSliderPosition = (_, value) => {
-      audio.currentTime = value;
+      track.currentTime = value;
       setPosition(value)
+    }
+
+    const handleVolume = (_, value) => {
+        track.volume = value/100
+        setVolume(track.volume*100)
     }
 
     return (
@@ -82,6 +116,9 @@ export const MusicPlayer = ({ track }) => {
                         mt: -1,
                     }}
                     >
+                    <IconButton aria-label="previous song">
+                        <FastRewindRounded fontSize="large" htmlColor={mainIconColor} onClick={handleRewind}/>
+                    </IconButton>
                     <IconButton
                         aria-label={paused ? 'play' : 'pause'}
                         onClick={handleClick}
@@ -94,6 +131,9 @@ export const MusicPlayer = ({ track }) => {
                         ) : (
                         <PauseRounded sx={{ fontSize: '3rem' }} htmlColor={mainIconColor} />
                         )}
+                    </IconButton>
+                    <IconButton aria-label="next song">
+                        <FastForwardRounded fontSize="large" htmlColor={mainIconColor} onClick={handleForward}/>
                     </IconButton>
                 </Box>      
                 <Slider
@@ -117,7 +157,22 @@ export const MusicPlayer = ({ track }) => {
                     <TinyText>-{formatDuration(duration - position)}</TinyText>
                     </Box>
                 </Grid>
-                <Grid item >Volume and +</Grid>
+                <Grid item xs={2}>
+                    <Stack spacing={2} direction="row" sx={{ mt: 2, px: 1 }} alignItems="center">
+                        <VolumeDownRounded htmlColor={mainIconColor} />
+                        <Slider
+                            aria-label="Volume"
+                            min={0}
+                            step={step}
+                            max={100}
+                            defaultValue={100}
+                            position={volume}
+                            size="small"
+                            onChange={handleVolume}
+                        />
+                        <VolumeUpRounded htmlColor={mainIconColor} />
+                    </Stack>    
+                </Grid>
             </Grid>
         </Box >
     )

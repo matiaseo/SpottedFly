@@ -34,7 +34,9 @@ export const MusicPlayer = ({ playlist }) => {
     const [track, setTrack] = useState(playlist[0].song)
 
     const [trackInfo, setTrackInfo] = useState({
+        //song: playlist[0].song,
         name: playlist[0].name,
+        albumCover: playlist[0].albumCover,
         artist: playlist[0].artist
     })
 
@@ -73,7 +75,11 @@ export const MusicPlayer = ({ playlist }) => {
     setPosition(0);
     track.volume = volume/100;
     const index = playlist.map(({song}) => song).indexOf(track);
-    setTrackInfo({name: playlist[index].name, artist: playlist[index].artist});
+    setTrackInfo({
+        name: playlist[index].name,
+        albumCover: playlist[index].albumCover,
+        artist: playlist[index].artist
+    });
   },[track])
   
     useEffect(() => {
@@ -114,10 +120,19 @@ export const MusicPlayer = ({ playlist }) => {
     return (
         <Box sx={{ position: 'sticky', bottom: 10, width: '100%' }}>
             <Grid container spacing={6} alignItems="center" justifyContent="space-around">
-                <Grid item xs={2}>
+                <Grid container xs={2} spacing={2} justifyContent="space-around" marginTop={6}>
+                <Grid item spacing={0.5} marginLeft={10}>
+                <img
+                    src={`${trackInfo.albumCover}?w=164&h=164&fit=crop&auto=format`}
+                    loading="lazy"
+                />
+                </Grid>
+                <Grid item xs={6}>
                     <TinyText>{trackInfo.name}</TinyText>
                     <TinyText>{trackInfo.artist}</TinyText>
                 </Grid>
+                </Grid>
+                
                 <Grid item xs={4}>
                 <Box
                     sx={{

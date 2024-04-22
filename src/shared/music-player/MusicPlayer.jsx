@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { styled } from '@mui/material/styles';
 import { Box, Grid, IconButton, Typography, Slider,Stack } from "@mui/material"
 import {
@@ -31,10 +31,8 @@ const TinyText = styled(Typography)({
 
 export const MusicPlayer = ({ playlist }) => {
 
-    const [track, setTrack] = useState(playlist[0].song)
-
-    const [trackInfo, setTrackInfo] = useState({
-        //song: playlist[0].song,
+    const [track, setTrack] = useState({
+        song: playlist[0].song,
         name: playlist[0].name,
         albumCover: playlist[0].albumCover,
         artist: playlist[0].artist
@@ -42,9 +40,19 @@ export const MusicPlayer = ({ playlist }) => {
 
     const [duration, setDuration ] = useState(0);
 
-    track.addEventListener('loadedmetadata', (e) => {
+    track.song.addEventListener('loadedmetadata', (e) => {
         setDuration(Math.trunc(e.target.duration))
     });
+
+    const currentTrackIndex = useCallback(() => playlist.map(({song}) => song).indexOf(track.song), [playlist, track]);
+
+    const handleUpcomingSong = useCallback((index, condition, songIndexIfTrue, songIndexIfFalse) => {
+        if (index >= 0){
+            track.song.pause();
+            setVolume(track.song.volume*100);
+            condition ? setTrack({...playlist[songIndexIfTrue]}) : setTrack({...playlist[songIndexIfFalse]}) 
+        }
+    }, [playlist, track]);
 
     const [paused, setPaused] = useState(true);
 
@@ -73,48 +81,34 @@ export const MusicPlayer = ({ playlist }) => {
 
   useEffect(() => {
     setPosition(0);
-    track.volume = volume/100;
-    const index = playlist.map(({song}) => song).indexOf(track);
-    setTrackInfo({
-        name: playlist[index].name,
-        albumCover: playlist[index].albumCover,
-        artist: playlist[index].artist
-    });
+    track.song.currentTime = 0;
+    track.song.volume = volume/100;
   },[track])
   
     useEffect(() => {
-      !paused ? track.play() : track.pause()
+      !paused ? track.song.play() : track.song.pause()
     }, [paused, track])
   
     const handleClick = () => setPaused(!paused);
 
     const handleForward = () => {
-        const index = playlist.map(({song}) => song).indexOf(track);
-        console.log('el index', index)
-        if (index >= 0){
-            track.pause();
-            setVolume(track.volume*100);
-            index < playlist.length -1 ? setTrack(playlist[index+1].song) : setTrack(playlist[0].song) 
-        }
+        const index = currentTrackIndex()
+        handleUpcomingSong(index, index < playlist.length -1, index+1, 0)
     }
 
     const handleRewind = () => {
-        const index = playlist.map(({song}) => song).indexOf(track);
-        if (index >= 0){
-            track.pause();
-            setVolume(track.volume*100);
-            index > 0 ? setTrack(playlist[index-1].song) : setTrack(playlist[playlist.length-1].song) 
-        }
+        const index = currentTrackIndex()
+        handleUpcomingSong(index, index > 0, index-1, playlist.length-1);
     }
   
     const handleSliderPosition = (_, value) => {
-      track.currentTime = value;
+      track.song.currentTime = value;
       setPosition(value)
     }
 
     const handleVolume = (_, value) => {
-        track.volume = value/100
-        setVolume(track.volume*100)
+        track.song.volume = value/100
+        setVolume(track.song.volume*100)
     }
 
     return (
@@ -123,13 +117,13 @@ export const MusicPlayer = ({ playlist }) => {
                 <Grid container xs={2} spacing={2} justifyContent="space-around" marginTop={6}>
                 <Grid item spacing={0.5} marginLeft={10}>
                 <img
-                    src={`${trackInfo.albumCover}?w=164&h=164&fit=crop&auto=format`}
+                    src={`${track.albumCover}?w=164&h=164&fit=crop&auto=format`}
                     loading="lazy"
                 />
                 </Grid>
                 <Grid item xs={6}>
-                    <TinyText>{trackInfo.name}</TinyText>
-                    <TinyText>{trackInfo.artist}</TinyText>
+                    <TinyText>{track.name}</TinyText>
+                    <TinyText>{track.artist}</TinyText>
                 </Grid>
                 </Grid>
                 

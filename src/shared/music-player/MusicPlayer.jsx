@@ -14,7 +14,8 @@ import {
 const mainIconColor = 'dark'//theme.palette.mode === 'dark' ? '#fff' : '#000';
 
 const step = 1//0.1;
-
+const MAX_VOLUME = 1;
+const VOLUME_STEP = 0.01
 const formatDuration = value => {
     console.log('formateanding', value)
   const minute = Math.floor(value / 60);
@@ -49,7 +50,7 @@ export const MusicPlayer = ({ playlist }) => {
     const handleUpcomingSong = useCallback((index, condition, songIndexIfTrue, songIndexIfFalse) => {
         if (index >= 0){
             track.song.pause();
-            setVolume(track.song.volume*100);
+            setVolume(track.song.volume);
             condition ? setTrack({...playlist[songIndexIfTrue]}) : setTrack({...playlist[songIndexIfFalse]}) 
         }
     }, [playlist, track]);
@@ -58,7 +59,7 @@ export const MusicPlayer = ({ playlist }) => {
 
     const [position, setPosition] = useState(0);
 
-    const [volume, setVolume] = useState(100)
+    const [volume, setVolume] = useState(MAX_VOLUME)
   
     useEffect(() => {
       if (!paused){
@@ -82,7 +83,7 @@ export const MusicPlayer = ({ playlist }) => {
   useEffect(() => {
     setPosition(0);
     track.song.currentTime = 0;
-    track.song.volume = volume/100;
+    track.song.volume = volume;
   },[track])
   
     useEffect(() => {
@@ -107,8 +108,8 @@ export const MusicPlayer = ({ playlist }) => {
     }
 
     const handleVolume = (_, value) => {
-        track.song.volume = value/100
-        setVolume(track.song.volume*100)
+        track.song.volume = value
+        setVolume(track.song.volume)
     }
 
     return (
@@ -183,9 +184,9 @@ export const MusicPlayer = ({ playlist }) => {
                         <Slider
                             aria-label="Volume"
                             min={0}
-                            step={step}
-                            max={100}
-                            defaultValue={100}
+                            step={VOLUME_STEP}
+                            max={MAX_VOLUME}
+                            defaultValue={MAX_VOLUME}
                             position={volume}
                             size="small"
                             onChange={handleVolume}

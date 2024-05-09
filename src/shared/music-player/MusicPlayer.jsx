@@ -7,8 +7,11 @@ import {
     SkipPreviousRounded,
     SkipNextRounded,
     VolumeUpRounded,
-    VolumeDownRounded
+    VolumeDownRounded,
+    VolumeOffRounded,
+    VolumeMuteRounded
 } from "@mui/icons-material";
+import { VolumeIcon } from "./VolumeIcon";
 
 
 const mainIconColor = 'dark'//theme.palette.mode === 'dark' ? '#fff' : '#000';
@@ -180,7 +183,7 @@ export const MusicPlayer = ({ playlist }) => {
                 </Grid>
                 <Grid item xs={2}>
                     <Stack spacing={2} direction="row" sx={{ mt: 2, px: 1 }} alignItems="center">
-                        <VolumeDownRounded htmlColor={mainIconColor} />
+                        <VolumeIcon volume={volume} htmlColor={mainIconColor} maxVolume={MAX_VOLUME}/>
                         <Slider
                             aria-label="Volume"
                             min={0}
@@ -191,7 +194,7 @@ export const MusicPlayer = ({ playlist }) => {
                             size="small"
                             onChange={handleVolume}
                         />
-                        <VolumeUpRounded htmlColor={mainIconColor} />
+                        {/* <VolumeUpRounded htmlColor={mainIconColor} /> */}
                     </Stack>    
                 </Grid>
             </Grid>

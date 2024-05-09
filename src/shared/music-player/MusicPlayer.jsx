@@ -4,8 +4,8 @@ import { Box, Grid, IconButton, Typography, Slider,Stack } from "@mui/material"
 import {
     PlayArrowRounded,
     PauseRounded,
-    FastRewindRounded,
-    FastForwardRounded,
+    SkipPreviousRounded,
+    SkipNextRounded,
     VolumeUpRounded,
     VolumeDownRounded
 } from "@mui/icons-material";
@@ -138,7 +138,7 @@ export const MusicPlayer = ({ playlist }) => {
                     }}
                     >
                     <IconButton aria-label="previous song">
-                        <FastRewindRounded fontSize="large" htmlColor={mainIconColor} onClick={handleRewind}/>
+                        <SkipPreviousRounded fontSize="large" htmlColor={mainIconColor} onClick={handleRewind}/>
                     </IconButton>
                     <IconButton
                         aria-label={paused ? 'play' : 'pause'}
@@ -154,7 +154,7 @@ export const MusicPlayer = ({ playlist }) => {
                         )}
                     </IconButton>
                     <IconButton aria-label="next song">
-                        <FastForwardRounded fontSize="large" htmlColor={mainIconColor} onClick={handleForward}/>
+                        <SkipNextRounded fontSize="large" htmlColor={mainIconColor} onClick={handleForward}/>
                     </IconButton>
                 </Box>      
                 <Slider

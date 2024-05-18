@@ -3,10 +3,14 @@ import { useParams } from "react-router-dom";
 import { MOCKED_USER } from "../../mocks/mockData.js";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
+import useTitle from "../../hooks/useTitle.js";
 
 export const ProfilePage = () => {
   const { userId } = useParams();
   const user = MOCKED_USER;
+
+  useTitle("Profile");
+
   return (
     <>
       <Box>

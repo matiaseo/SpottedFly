@@ -9,6 +9,7 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Link from "@mui/material/Link";
 import { DataGrid } from "@mui/x-data-grid";
+import { MOCKED_PLAYLIST } from "../../mocks/mockData";
 
 const COLUMNS = [
   { field: "id", headerName: "#", width: 70 },
@@ -16,17 +17,7 @@ const COLUMNS = [
   { field: "duration", headerName: "Clock", width: 100 },
 ];
 
-const ROWS = [
-  { id: 1, title: "Come Together", duration: "1:00" },
-  { id: 2, title: "Somethings", duration: "1:00" },
-  { id: 3, title: "Oh! Darling", duration: "1:00" },
-  { id: 4, title: "Octopus's Garden", duration: "1:00" },
-  { id: 5, title: "I Want You", duration: "1:00" },
-  { id: 6, title: "Because", duration: "1:00" },
-  { id: 7, title: "Sun King", duration: "1:00" },
-  { id: 8, title: "The End", duration: "1:00" },
-  { id: 9, title: "Her Majesty", duration: "1:00" },
-];
+const rows = MOCKED_PLAYLIST.map(track => ({...track, duration: '00:30'}))
 
 export const AlbumPage = () => {
   return (
@@ -83,7 +74,7 @@ export const AlbumPage = () => {
               </Stack>
             </Stack>
             <Box sx={{ margin: "5px 16px" }}>
-              <DataGrid rows={ROWS} columns={COLUMNS} />
+              <DataGrid rows={rows} columns={COLUMNS} />
             </Box>
             <Stack sx={{ margin: 3, alignSelf: "end", color: "#B3B3B3" }}>
               <Typography variant="body2">September 26, 1969</Typography>

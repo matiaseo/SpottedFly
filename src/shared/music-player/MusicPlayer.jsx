@@ -5,11 +5,7 @@ import {
     PlayArrowRounded,
     PauseRounded,
     SkipPreviousRounded,
-    SkipNextRounded,
-    VolumeUpRounded,
-    VolumeDownRounded,
-    VolumeOffRounded,
-    VolumeMuteRounded
+    SkipNextRounded
 } from "@mui/icons-material";
 import { VolumeIcon } from "./VolumeIcon";
 
@@ -37,7 +33,7 @@ export const MusicPlayer = ({ playlist }) => {
 
     const [track, setTrack] = useState({
         song: playlist[0].song,
-        name: playlist[0].name,
+        title: playlist[0].title,
         albumCover: playlist[0].albumCover,
         artist: playlist[0].artist
     })
@@ -126,7 +122,7 @@ export const MusicPlayer = ({ playlist }) => {
                 />
                 </Grid>
                 <Grid item xs={6}>
-                    <TinyText>{track.name}</TinyText>
+                    <TinyText>{track.title}</TinyText>
                     <TinyText>{track.artist}</TinyText>
                 </Grid>
                 </Grid>

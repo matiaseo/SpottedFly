@@ -1,10 +1,12 @@
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { Box } from "@mui/material";
 import "./App.css";
 
-import { Home } from "./pages/home/Home";
-import { Navbar } from "./shared/sidebar/Navbar";
+// import { SideBar } from "./shared/sidebar/SideBar";
+// import { Yourelistening } from "./shared/yourelistening/yourelistening";
+import { MusicPlayer } from "./shared/music-player/MusicPlayer";
+import { MainContainer } from "./shared/main-container/MainContainer";
+import { MOCKED_PLAYLIST } from "./mocks/mockData";
 
 const darkTheme = createTheme({
   palette: {
@@ -12,16 +14,16 @@ const darkTheme = createTheme({
   },
 });
 
+
+
+
 const App = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <Box sx={{ display: "flex" }}>
-        <Navbar />
-        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-          <Home />
-        </Box>
-      </Box>
+      <MainContainer />
+      <MusicPlayer playlist={MOCKED_PLAYLIST}/>
+      {/* Here we should have the player component at some point */}
     </ThemeProvider>
   );
 };

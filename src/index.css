@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://db.onlinewebfonts.com/c/9475d6a0b79c164f9f605673714e75d9?family=Circular+Std+Medium");
 @import url("https://db.onlinewebfonts.com/c/961a181da27e7cbc072ec2fb5bbfe2a9?family=Circular+Std+Bold");
+@import url("https://db.onlinewebfonts.com/c/860c3ec7bbc5da3e97233ccecafe512e?family=Circular+Std+Book");
 
 :root {
   line-height: 1.5;
@@ -15,5 +17,15 @@ body {
 }
 
 * {
+  font-family: "Circular Std Book", sans-serif !important;
+}
+
+h1,
+a {
   font-family: "Circular Std Bold", sans-serif !important;
+  text-decoration: none !important;
+}
+
+a:hover {
+  text-decoration: underline !important;
 }

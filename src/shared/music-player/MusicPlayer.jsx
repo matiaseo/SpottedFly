@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
 import { styled } from '@mui/material/styles';
 import { Box, Grid, IconButton, Typography, Slider,Stack } from "@mui/material"
 import {
@@ -8,6 +8,7 @@ import {
     SkipNextRounded
 } from "@mui/icons-material";
 import { VolumeIcon } from "./VolumeIcon";
+import { PlaylistContext } from "../../context/PlaylistContext";
 
 
 const mainIconColor = 'dark'//theme.palette.mode === 'dark' ? '#fff' : '#000';
@@ -29,20 +30,24 @@ const TinyText = styled(Typography)({
   letterSpacing: 0.2,
 });
 
-export const MusicPlayer = ({ playlist }) => {
+export const MusicPlayer = () => {
 
-    const [track, setTrack] = useState({
-        song: playlist[0].song,
-        title: playlist[0].title,
-        albumCover: playlist[0].albumCover,
-        artist: playlist[0].artist
-    })
-
+    const { playlist } = useContext(PlaylistContext);
+    const [track, setTrack] = useState({})
     const [duration, setDuration ] = useState(0);
 
-    track.song.addEventListener('loadedmetadata', (e) => {
+    track?.song?.addEventListener('loadedmetadata', (e) => {
         setDuration(Math.trunc(e.target.duration))
     });
+
+    useEffect(() => {
+        setTrack({
+            song: playlist[0]?.song,
+            title: playlist[0]?.title,
+            albumCover: playlist[0]?.albumCover,
+            artist: playlist[0]?.artist
+        })
+    },[playlist])
 
     const currentTrackIndex = useCallback(() => playlist.map(({song}) => song).indexOf(track.song), [playlist, track]);
 
@@ -81,12 +86,14 @@ export const MusicPlayer = ({ playlist }) => {
 
   useEffect(() => {
     setPosition(0);
-    track.song.currentTime = 0;
-    track.song.volume = volume;
+    if(track?.song){
+        track.song.currentTime = 0;
+        track.song.volume = volume;
+    }
   },[track])
   
     useEffect(() => {
-      !paused ? track.song.play() : track.song.pause()
+      !paused ? track?.song?.play() : track?.song?.pause()
     }, [paused, track])
   
     const handleClick = () => setPaused(!paused);

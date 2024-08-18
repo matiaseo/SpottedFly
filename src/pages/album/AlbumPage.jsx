@@ -1,4 +1,4 @@
-import React from "react";
+import { useContext } from "react";
 import { Box, Stack } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import Link from "@mui/material/Link";
 import { DataGrid } from "@mui/x-data-grid";
-import { MOCKED_PLAYLIST } from "../../mocks/mockData";
+import { PlaylistContext } from "../../context/PlaylistContext";
 
 const COLUMNS = [
   { field: "id", headerName: "#", width: 70 },
@@ -17,9 +17,10 @@ const COLUMNS = [
   { field: "duration", headerName: "Clock", width: 100 },
 ];
 
-// const rows = MOCKED_PLAYLIST.map(track => ({...track, duration: '00:30'}))
+export const AlbumPage = () => {
 
-export const AlbumPage = ({ playlist }) => {
+  const { playlist } = useContext(PlaylistContext)
+
   const rows = playlist.map(track => ({...track, duration: '00:30'}))
   return (
     <>

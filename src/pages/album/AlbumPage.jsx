@@ -17,9 +17,10 @@ const COLUMNS = [
   { field: "duration", headerName: "Clock", width: 100 },
 ];
 
-const rows = MOCKED_PLAYLIST.map(track => ({...track, duration: '00:30'}))
+// const rows = MOCKED_PLAYLIST.map(track => ({...track, duration: '00:30'}))
 
-export const AlbumPage = () => {
+export const AlbumPage = ({ playlist }) => {
+  const rows = playlist.map(track => ({...track, duration: '00:30'}))
   return (
     <>
       <div style={{ height: 54, position: "sticky" }}>DUMMY HEADER</div> {/* TODO: Add header */}

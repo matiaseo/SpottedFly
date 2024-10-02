@@ -98,7 +98,7 @@ export const MusicPlayer = () => {
       !paused ? track?.song?.play() : track?.song?.pause()
     }, [paused, track])
   
-    const handleClick = () => setPaused(!paused);
+    const handlePlay = () => setPaused(!paused);
 
     const handleForward = () => {
         const index = currentTrackIndex()
@@ -150,7 +150,7 @@ export const MusicPlayer = () => {
                     </IconButton>
                     <IconButton
                         aria-label={paused ? 'play' : 'pause'}
-                        onClick={handleClick}
+                        onClick={handlePlay}
                     >
                         {paused ? (
                         <PlayArrowRounded

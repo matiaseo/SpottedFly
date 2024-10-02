@@ -70,7 +70,9 @@ export const MusicPlayer = () => {
         const timer = setInterval(() => {
           setPosition((oldProgress) => {
                 if (oldProgress >= duration) {
-                    setPaused(!paused);
+                    const tracksTitle = playlist.map(({title}) => title)
+                    const currentTrack = tracksTitle.indexOf(track.title);
+                    currentTrack < playlist.length -1 ? setTrack({...playlist[currentTrack+1]}): setTrack({...playlist[0]})
                     setPosition(0);
                     return 0;
                 }
